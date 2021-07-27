@@ -15,7 +15,10 @@ class Company{
     }
 }
 
-class subCompany{
+class subCompany extends Company{
+    public void test5(){
+
+    }
 
 }
 public class Demo29 {
@@ -24,5 +27,13 @@ public class Demo29 {
         company.test1();
         company.test3();
         company.test4();
+
+        subCompany subCompany = new subCompany();
+        subCompany.test1();
+        subCompany.test3();
+        subCompany.test4();
+        subCompany.test5();
+
+        //only within company is there access to test2 as it is private
     }
 }
