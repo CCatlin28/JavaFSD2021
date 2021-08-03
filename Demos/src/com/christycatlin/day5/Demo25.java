@@ -16,7 +16,7 @@ public class Demo25 {
         Byte byteObj = a;
         Short shorObj = b;
         Integer intObj = 30;
-        // unboxing conver object into primitive
+        // unboxing convert object into primitive
         byte byteValue = byteObj;
         short shortValue = shorObj;
         int intValue = intObj;
