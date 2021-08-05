@@ -2,76 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0e1f2aa-99da-45ae-a4de-1e16f6dcb2f6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaTraining.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo1.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo10.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo11.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo12.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo13.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo14.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo15.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo16.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo17.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo18.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo19.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo2.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo20.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo21.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo22.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo24.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo25.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo26.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo27.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo28.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo3.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo4.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo5.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo6.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo7.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo8.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Demo9.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day1/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo1.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo10.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo11.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo12.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo13.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo14.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo15.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo16.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo17.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo18.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo19.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo2.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo20.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo21.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo22.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo23.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo24.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo25.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo26.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo27.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo28.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo29.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo3.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo4.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo5.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo6.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo7.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo8.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/Demo9.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/InterfacePractice.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/christycatlin/day2/InterfacePractice2.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/com.iml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project/Project0/src/bank/Bank.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project/Project0/src/bank/Customer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project/Project0/src/bank/Employee.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project/Project0/src/bank/IAccount.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project/Project0/src/bank/IAccountFunctions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project/Project0/src/bank/IAccountView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Demos/src/com/christycatlin/day7/Demo1.java" beforeDir="false" afterPath="$PROJECT_DIR$/Demos/src/com/christycatlin/day7/Demo1.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
