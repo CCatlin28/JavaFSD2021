@@ -1,4 +1,4 @@
-package bank;
+package com.christycatlin.try1.bank;
 
 import java.sql.*;
 

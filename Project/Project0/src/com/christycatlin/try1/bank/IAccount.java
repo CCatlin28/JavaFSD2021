@@ -1,4 +1,4 @@
-package bank;
+package com.christycatlin.try1.bank;
 
 public interface IAccount {
     //create account (apply for account as customer, employee does account approval)

@@ -1,4 +1,4 @@
-package bank;
+package com.christycatlin.try1.bank;
 
 public interface IAccountFunctions {
     //view account balance

@@ -8,15 +8,10 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     private static Statement statement = null;
     Connection connection = null;
-    private Object List;
-    private Object Employee;
+
 
     public EmployeeDAOImpl(){
-        try {
-            this.connection = ConnectionFactory.getConnection();
-        } catch (SQLException throwables){
-            throwables.printStackTrace();
-        }
+
     }
 
     @Override
