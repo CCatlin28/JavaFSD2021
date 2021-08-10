@@ -2,9 +2,11 @@ package com.christycatlin.bank;
 
 import com.christycatlin.accounts.AcctDBImpl;
 import com.christycatlin.customer.CustomerDBImpl;
+import com.christycatlin.employee.EmployeeDBImpl;
 
 
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -38,9 +40,9 @@ public class Main {
                     int empID = scanner.nextInt();
                     System.out.println("Enter Password");
                     String empPass = scanner.next();
-                    //   sysAccess.loginEmployee(empID, empPass);
-
-                    break;
+                    EmployeeDBImpl employeeDB = new EmployeeDBImpl();
+                    employeeDB.empLogin(empID, empPass);
+                break;
                 case 2:
                     //Customer Log In
                     System.out.println("Enter Customer ID");
@@ -61,6 +63,10 @@ public class Main {
                     String cEmail = scanner.next();
                     System.out.println("Enter Desired Password");
                     String cPass = scanner.next();
+                    System.out.println("What Type of Account: Checking or Savings");
+                    String type = scanner.next();
+                    System.out.println("Enter Starting Deposit Amount:");
+                    double deposit = scanner.nextDouble();
                     //    sysAccess.addCustomer(fName,lName,cPhone,cEmail,cPass);
                     //New Customer Application
 
@@ -74,8 +80,9 @@ public class Main {
                     welcomeScreen();
                     break;
             }
-        } finally {
-            System.out.println("Testing System");
+        } catch (InputMismatchException exception){
+            System.out.println("Please Select 1-4");
+            welcomeScreen();
 
         }
     }

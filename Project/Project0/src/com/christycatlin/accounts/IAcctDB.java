@@ -4,10 +4,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IAcctDB {
-    List<Accounts> getAcct() throws SQLException;
-    List<Accounts> getAcctByCustID(int custId) throws SQLException;
-    List<Accounts> getAcctByAcctID(int acctId) throws  SQLException;
-    void withdraw(int acctId, double withdrawAmt) throws SQLException;
-    void deposit(int acctId, double depositAmt) throws SQLException;
+    void getAcct() throws SQLException;
+    void getAcctByCustID(int custId) throws SQLException;
+    void getAcctByAcctID(int custID, int acctId) throws  SQLException;
+    void withdraw(int id, int acctId, double withdrawAmt) throws SQLException;
+    void deposit(int id, int acctId, double depositAmt) throws SQLException;
+    void createAcct(int custID, String type, double balance) throws SQLException;
+
 
 }

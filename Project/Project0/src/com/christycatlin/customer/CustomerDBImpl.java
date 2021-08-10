@@ -1,5 +1,6 @@
 package com.christycatlin.customer;
 
+import com.christycatlin.accounts.AcctDBImpl;
 import com.christycatlin.bank.Main;
 import com.christycatlin.connections.ConnectionFactory;
 import com.christycatlin.employee.EmployeeDBImpl;
@@ -22,7 +23,7 @@ public class CustomerDBImpl implements ICustomerDB {
 
     }
 
-    @Override
+    @Override //this one is working
     public void custLogin(int id, String pass) throws SQLException {
         String sql = "select Cust_ID, password from customer where Cust_ID = " + id;
         Statement statement = connection.createStatement();
@@ -74,11 +75,11 @@ public class CustomerDBImpl implements ICustomerDB {
     @Override
     public void startTransfer(int custID) throws SQLException {
         CustomerMenu menu = new CustomerMenu(custID);
-
+        AcctDBImpl acctDB = new AcctDBImpl();
         Scanner scanner = new Scanner(System.in);
         System.out.println("What Account Number would you like to make the transfer FROM");
         int acctId = scanner.nextInt();
-        String sql = "select Cust_ID, Balance from accounts where Acct_ID =" + acctId;
+        String sql = "select Cust_ID, Balance from accounts where Acct_Num =" + acctId;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         if (resultSet.next()) {
@@ -92,43 +93,23 @@ public class CustomerDBImpl implements ICustomerDB {
                     menu.CustMainMenu(custID);
                 } else {
                     double newBalance = balance - transfer;
-                    String safety = "rollback; start transaction";
-                    ResultSet resultSetSafety = statement.executeQuery(safety);
-                    String sql2 = " update accounts set balance = ? where Acct_Id = " + acctId;
-                    PreparedStatement preparedStatement = connection.prepareStatement(sql2);
-                    preparedStatement.setDouble(1, newBalance);
-                    String sql3 = "insert into transactions Cust_ID, Acct_ID, start_bal, withdraw, end_bal values (?, ?, ?, ?, ?)";
-                    PreparedStatement preparedStatement1 = connection.prepareStatement(sql3);
-                    preparedStatement1.setInt(1, custID);
-                    preparedStatement1.setInt(2, acctId);
-                    preparedStatement1.setDouble(3, balance);
-                    preparedStatement1.setDouble(4, transfer);
-                    preparedStatement1.setDouble(5, newBalance);
+                    connection.setAutoCommit(false);
+                    acctDB.withdraw(custID, acctId, transfer);
                     System.out.println("What Account would you like to transfer " + transfer + " into?");
                     int acctID2 = scanner.nextInt();
-                    String sql4 = "select Cust_ID, Balance from accounts where Acct_ID =" + acctID2;
+                    String sql4 = "select Cust_ID, Balance from accounts where Acct_Num =" + acctID2;
                     Statement statement2 = connection.createStatement();
                     ResultSet resultSet2 = statement2.executeQuery(sql4);
-                    if (resultSet.next()) {
+                    if (resultSet2.next()) {
                         int custId2 = resultSet2.getInt(1);
                         double balance2 = resultSet2.getDouble(2);
                         double newBalance2 = balance2 + transfer;
                         if (custID == custId2) {
-                            String sql5 = " update accounts set balance = ? where Acct_Id = " + acctId;
-                            PreparedStatement preparedStatement3 = connection.prepareStatement(sql5);
-                            preparedStatement.setDouble(1, newBalance);
-                            String sql6 = "insert into transactions (Cust_ID, Acct_ID, start_bal, deposit, end_bal values (?, ?, ?, ?, ?)";
-                            PreparedStatement preparedStatement4 = connection.prepareStatement(sql6);
-                            preparedStatement1.setInt(1, custID);
-                            preparedStatement1.setInt(2, acctId);
-                            preparedStatement1.setDouble(3, balance);
-                            preparedStatement1.setDouble(4, transfer);
-                            preparedStatement1.setDouble(5, newBalance2);
+                            acctDB.deposit(custID,acctID2,transfer);
                             System.out.println("You have transferred $" + transfer + " from Account #"
                                     + acctId + "Which has a New Balance of $" + newBalance + " into Account #"
                                     + acctID2 + " Which has a New Balance of $" + newBalance2);
-                            String clear = "commit";
-                            ResultSet resultSetClear = statement.executeQuery(clear);
+                            connection.commit();
                             menu.CustMainMenu(custID);
                         } else {
                             System.out.println("Requires Receiving customer Approval");
@@ -136,6 +117,8 @@ public class CustomerDBImpl implements ICustomerDB {
                         }
                     } else {
                         System.out.println("No Account Found");
+                        connection.rollback();
+                        menu.CustMainMenu(custID);
                     }
                 }
             } else {
@@ -150,42 +133,51 @@ public class CustomerDBImpl implements ICustomerDB {
 
         @Override
         public void acceptTransfer(int custID, int acctId, int custId2, int acctID2, double transfer) throws SQLException {
+            CustomerMenu menu = new CustomerMenu(custID);
             System.out.println("Customer " + custId2 + "Please input password");
             Scanner scanner = new Scanner(System.in);
             String pass = scanner.next();
-            String sql5 = "select Cust_ID, password, balance from customer where Cust_ID = " + custId2;
+            String sql5 = "select password from customer where Cust_ID = " + custId2;
             Statement statement5 = connection.createStatement();
             ResultSet resultSet5 = statement5.executeQuery(sql5);
             if (resultSet5.next()) {
-                String password = resultSet5.getString(2);
-                double balance = resultSet5.getDouble(3);
-                double newBalance = balance + transfer;
+                String password = resultSet5.getString(1);
                 if (pass.equalsIgnoreCase(password)) {
                     System.out.println("Customer Login Successful Transfer Processing");
-                    String sql6 = " update accounts set balance = ? where Acct_Id = " + acctID2;
-                    PreparedStatement preparedStatement6 = connection.prepareStatement(sql6);
-                    preparedStatement6.setDouble(1, newBalance);
-                    String sql7 = "insert into transactions (Cust_ID, Acct_ID, start_bal, deposit, end_bal values (?, ?, ?, ?, ?)";
-                    PreparedStatement preparedStatement7 = connection.prepareStatement(sql7);
-                    preparedStatement7.setInt(1, custID);
-                    preparedStatement7.setInt(2, acctId);
-                    preparedStatement7.setDouble(3, balance);
-                    preparedStatement7.setDouble(4, transfer);
-                    preparedStatement7.setDouble(5, newBalance);
+                    AcctDBImpl acctDB = new AcctDBImpl();
+                    acctDB.deposit(custId2,acctID2,transfer);
                     System.out.println("You have transferred $" + transfer + " from Account #"
                             + acctId + " into Account #" + acctID2);
-                    String clear = "commit";
-                    ResultSet resultSetClear = statement.executeQuery(clear);
-                    CustomerMenu menu = new CustomerMenu(custID);
+                    connection.commit();
                     menu.CustMainMenu(custID);
                 } else {
                     System.out.println("Password is Incorrect");
-                    Main mainMenu = new Main();
-                    mainMenu.welcomeScreen();
+                    connection.rollback();
+                    menu.CustMainMenu(custID);
+
                 }
 
             }
         }
+
+    @Override
+    public void newCust(String name, String surName, String phone, String email, String password) throws SQLException {
+        String sql = "insert into customer (First_name, Last_name, phone, email, password) values (?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, surName);
+        preparedStatement.setString(3, phone);
+        preparedStatement.setString(4, email);
+        preparedStatement.setString(5, password);
+        int count = preparedStatement.executeUpdate();
+        if (count > 0) {
+            System.out.println("New Customer Saved");
+        } else {
+            System.out.println("Oops! Something went wrong");
+            Main mainMenu = new Main();
+            mainMenu.welcomeScreen();
+        }
     }
+}
 
 

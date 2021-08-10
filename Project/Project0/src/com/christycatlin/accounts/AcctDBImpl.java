@@ -1,6 +1,9 @@
 package com.christycatlin.accounts;
 
+import com.christycatlin.bank.Main;
 import com.christycatlin.connections.ConnectionFactory;
+import com.christycatlin.customer.CustomerMenu;
+import com.christycatlin.transactions.TransactionsDBImpl;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,8 +21,8 @@ public class AcctDBImpl implements IAcctDB{
         }
     }
 
-    @Override
-    public List<Accounts> getAcct() throws SQLException {
+    @Override // works correctly
+    public void getAcct() throws SQLException {
         List<Accounts> accounts = new ArrayList<>();
         String sql = "select * from accounts";
         Statement statement = connection.createStatement();
@@ -31,39 +34,38 @@ public class AcctDBImpl implements IAcctDB{
             double bal = resultSet.getDouble(4);
             Accounts accounts1 = new Accounts(acctID,custID,acctType,bal);
             accounts.add(accounts1);
-            System.out.println(accounts);
+            System.out.println(accounts1);
 
         }
-        return accounts;
+        System.out.println("End of Account List");
 
 
     }
 
-    @Override
-    public List<Accounts> getAcctByCustID(int custId) throws SQLException {
+    @Override // works correctly
+    public void getAcctByCustID(int custId) throws SQLException {
         List<Accounts> accounts = new ArrayList<>();
         String sql = "select * from accounts where Cust_ID =" + custId;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-        if (resultSet.next()){
+        while (resultSet.next()){
             int acctNum = resultSet.getInt(1);
             int id = resultSet.getInt(2);
             String acctType = resultSet.getString(3);
             double balance = resultSet.getDouble(4);
             Accounts accounts1 = new Accounts(acctNum, id, acctType, balance);
             accounts.add(accounts1);
-        } else {
-            System.out.println("No Account Found");
-        }
-        return accounts;
+            System.out.println(accounts1);
+            }
+        System.out.println("End of Account List");
     }
 
 
 
-    @Override
-    public List<Accounts> getAcctByAcctID(int acctId) throws SQLException {
+    @Override //works correctly
+    public void getAcctByAcctID(int custID, int acctId) throws SQLException {
         List<Accounts> accounts = new ArrayList<>();
-        String sql = "select * from accounts where Acct_ID =" + acctId;
+        String sql = "select * from accounts where Acct_Num =" + acctId;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         if (resultSet.next()){
@@ -71,68 +73,90 @@ public class AcctDBImpl implements IAcctDB{
             int id = resultSet.getInt(2);
             String acctType = resultSet.getString(3);
             double balance = resultSet.getDouble(4);
-            Accounts accounts1 = new Accounts(acctNum, id, acctType, balance);
-            accounts.add(accounts1);
+            if (id == custID) {
+                Accounts accounts1 = new Accounts(acctNum, id, acctType, balance);
+                accounts.add(accounts1);
+                System.out.println(accounts);
+            } else {
+                System.out.println("You do not have access to this account");
+                CustomerMenu menu = new CustomerMenu(custID);
+                menu.CustMainMenu(custID);
+            }
+
         } else {
             System.out.println("No Account Found");
         }
-        return accounts;
 
     }
 
-    @Override
-    public void withdraw(int acctId, double withdrawAmt) throws SQLException {
-        String sql = "select Cust_ID, Balance from accounts where Acct_ID =" + acctId;
+    @Override // working correctly
+    public void withdraw(int id, int acctId, double withdrawAmt) throws SQLException {
+        String sql = "select Cust_ID, Balance from accounts where Acct_Num =" + acctId;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         if (resultSet.next()){
             int custId = resultSet.getInt(1);
             double balance = resultSet.getDouble(2);
+            if(custId != id){
+                System.out.println("You do not have access to this account");
+                CustomerMenu menu = new CustomerMenu(id);
+                menu.CustMainMenu(id);
+            }
             if (withdrawAmt>balance){
                 System.out.println("Insufficient Funds");
             } else {
                 double newBalance = balance-withdrawAmt;
-                String sql2 = " update accounts set balance = ? where Acct_Id = "+acctId;
-                PreparedStatement preparedStatement = connection.prepareStatement(sql2);
-                preparedStatement.setDouble(1, newBalance);
-                String sql3 = "insert into transactions Cust_ID, Acct_ID, start_bal, withdrawl, end_bal values (?, ?, ?, ?, ?)";
-                PreparedStatement preparedStatement1 = connection.prepareStatement(sql3);
-                preparedStatement1.setInt(1, custId);
-                preparedStatement1.setInt(2, acctId);
-                preparedStatement1.setDouble(3, balance);
-                preparedStatement1.setDouble(4,withdrawAmt);
-                preparedStatement1.setDouble(5, newBalance);
-                System.out.println("You have withdrawn $" +withdrawAmt +" from Account #" +acctId +" Remaining Balance is $" +newBalance);
+                TransactionsDBImpl transactionsDB = new TransactionsDBImpl();
+                transactionsDB.logWithdraw(custId,acctId, balance, withdrawAmt, newBalance);
             }
         } else {
-            System.out.println("No Account Found");
+            System.out.println("Unavailable Option Please Try Again");
+            CustomerMenu menu = new CustomerMenu(id);
+            menu.CustMainMenu(id);
         }
 
     }
 
-    @Override
-    public void deposit(int acctId, double depositAmt) throws SQLException{
-        String sql = "select Cust_ID, Balance from accounts where Acct_ID =" + acctId;
+    @Override // working
+    public void deposit(int id, int acctId, double depositAmt) throws SQLException{
+        String sql = "select Cust_ID, Balance from accounts where Acct_Num =" + acctId;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         if (resultSet.next()){
             int custId = resultSet.getInt(1);
             double balance = resultSet.getDouble(2);
-            double newBalance = balance+depositAmt;
-            String sql2 = " update accounts set balance = ? where Acct_Id = "+acctId;
-            PreparedStatement preparedStatement = connection.prepareStatement(sql2);
-            preparedStatement.setDouble(1, newBalance);
-            String sql3 = "insert into transactions (Cust_ID, Acct_ID, start_bal, deposit, end_bal values (?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement1 = connection.prepareStatement(sql3);
-            preparedStatement1.setInt(1, custId);
-            preparedStatement1.setInt(2, acctId);
-            preparedStatement1.setDouble(3, balance);
-            preparedStatement1.setDouble(4,depositAmt);
-            preparedStatement1.setDouble(5, newBalance);
-            System.out.println("You have deposited $" +depositAmt +" into Account #" +acctId +" New Balance is $" +newBalance);
+            if(custId != id){
+                System.out.println("You do not have access to this account");
+                CustomerMenu menu = new CustomerMenu(id);
+                menu.CustMainMenu(id);
+            } else {
+                double newBalance = balance+depositAmt;
+                TransactionsDBImpl transactionsDB = new TransactionsDBImpl();
+                transactionsDB.logDeposit(custId,acctId, balance, depositAmt, newBalance);
+            }
+
         } else {
-            System.out.println("No Account Found");
+            System.out.println("Unavailable Option Please Try Again");
+            CustomerMenu menu = new CustomerMenu(id);
+            menu.CustMainMenu(id);
         }
 
+    }
+
+    @Override
+    public void createAcct(int custID, String type, double balance) throws SQLException {
+        String sql = "insert into accounts (Cust_id, Acct_type, balance) values (?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, custID);
+        preparedStatement.setString(2, type);
+        preparedStatement.setDouble(3, balance);
+        int count = preparedStatement.executeUpdate();
+        if (count > 0) {
+            System.out.println("New Account Saved");
+        } else {
+            System.out.println("Oops! Something went wrong");
+            Main mainMenu = new Main();
+            mainMenu.welcomeScreen();
+                                }
     }
 }

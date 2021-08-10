@@ -9,18 +9,26 @@ public class Transactions {
     private double deposit;
     private double endBal;
 
-    public Transactions(){
-
-    }
-    public Transactions(int transactionId, int custId, int acctId, double startBal, double withdrawl, double deposit, double endBal){
+    public Transactions() {
 
     }
 
-    public Transactions(int transactionId){
+    public Transactions(int transactionId, int custId, int acctId, double startBal, double withdrawl, double deposit, double endBal) {
+        this.transactionId = transactionId;
+        this.custId = custId;
+        this.acctId = acctId;
+        this.startBal = startBal;
+        this.withdrawl = withdrawl;
+        this.deposit = deposit;
+        this. endBal =endBal;
+
+    }
+
+    public Transactions(int transactionId) {
         this.transactionId = transactionId;
     }
 
-    public Transactions(int custId, int acctId){
+    public Transactions(int custId, int acctId) {
         this.custId = custId;
         this.acctId = acctId;
     }
@@ -81,5 +89,11 @@ public class Transactions {
         this.endBal = endBal;
     }
 
-    //do I need a toString overide here?
+    @Override
+    public String toString() {
+        return "Transaction Number: " + transactionId + ", is associated with Account Number "
+                + acctId + ", belonging to Customer ID: " + custId + " with a starting balance of $" + startBal
+                + " a withdraw amount of $" + withdrawl + " a deposit amount of $" + deposit + " with an ending balance of $"
+                + endBal;
+    }
 }

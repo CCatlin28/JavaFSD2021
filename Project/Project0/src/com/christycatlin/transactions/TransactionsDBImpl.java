@@ -2,10 +2,7 @@ package com.christycatlin.transactions;
 
 import com.christycatlin.connections.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +20,8 @@ public class TransactionsDBImpl implements ITransactionDB{
                 throwables.printStackTrace();
             }
     }
-    @Override
-    public List<Transactions> viewAll() throws SQLException {
+    @Override // working
+    public void viewAll() throws SQLException {
         List<Transactions> transactions = new ArrayList<>();
         String sql = "select * from transactions";
         Statement statement = connection.createStatement();
@@ -39,12 +36,14 @@ public class TransactionsDBImpl implements ITransactionDB{
             double endBal = resultSet.getDouble(7);
             Transactions transactions1 = new Transactions(id, custId, acctId,startBal, withdrawl, deposit, endBal);
             transactions.add(transactions1);
+            System.out.println(transactions1);
 
         }
-        return transactions;
+        System.out.println("End of Transaction List");
+
     }
 
-    @Override
+    @Override //working
     public List<Transactions> viewCust(int custID) throws SQLException {
         List<Transactions> transactions = new ArrayList<>();
         String sql = "select * from transactions where Cust_ID = " +custID;
@@ -60,13 +59,15 @@ public class TransactionsDBImpl implements ITransactionDB{
             double endBal = resultSet.getDouble(7);
             Transactions transactions1 = new Transactions(id, custId, acctId,startBal, withdrawl, deposit, endBal);
             transactions.add(transactions1);
+            System.out.println(transactions1);
 
         }
+        System.out.println("End of Transaction List");
         return transactions;
 
     }
 
-    @Override
+    @Override //working
     public List<Transactions> viewAcct(int acctNum) throws SQLException {
         List<Transactions> transactions = new ArrayList<>();
         String sql = "select * from transactions where Acct_ID = " +acctNum;
@@ -82,9 +83,65 @@ public class TransactionsDBImpl implements ITransactionDB{
             double endBal = resultSet.getDouble(7);
             Transactions transactions1 = new Transactions(id, custId, acctId,startBal, withdrawl, deposit, endBal);
             transactions.add(transactions1);
+            System.out.println(transactions1);
 
         }
+        System.out.println("End of Transaction List");
         return transactions;
+
+    }
+
+    @Override // working
+    public void logDeposit(int custID, int acctNum, double start, double deposit, double end) throws SQLException {
+        Statement statement = connection.createStatement();
+        String sql = "insert into transactions (Cust_ID, Acct_ID, start_bal, deposit, end_bal) values (?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement1 = connection.prepareStatement(sql);
+        preparedStatement1.setInt(1, custID);
+        preparedStatement1.setInt(2, acctNum);
+        preparedStatement1.setDouble(3, start);
+        preparedStatement1.setDouble(4,deposit);
+        preparedStatement1.setDouble(5, end);
+        int count = preparedStatement1.executeUpdate();
+        if (count > 0)
+            System.out.println("Transaction Processing");
+        else
+            System.out.println("Oops! Something Went Wrong");
+        String sql2 = "update accounts set balance = ? where Acct_Num = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql2);
+        preparedStatement.setDouble(1, end);
+        preparedStatement.setInt(2, acctNum);
+        int count2 = preparedStatement.executeUpdate();
+        if (count2>0)
+        System.out.println("You have deposited $" +deposit +" into Account #" +acctNum +" New Balance is $" +end);
+        else
+            System.out.println("Oops Somethins Went Wrong");
+    }
+
+    @Override // working correctly
+    public void logWithdraw(int custID, int acctNum, double start, double withdraw, double end) throws SQLException {
+        Statement statement = connection.createStatement();
+        String sql = "insert into transactions (Cust_ID, Acct_ID, start_bal, withdraw, end_bal) values (?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, custID);
+        preparedStatement.setInt(2, acctNum);
+        preparedStatement.setDouble(3, start);
+        preparedStatement.setDouble(4,withdraw);
+        preparedStatement.setDouble(5, end);
+        String sql2 = "update accounts set balance = ? where Acct_Num = ?";
+        int count = preparedStatement.executeUpdate();
+        if (count > 0)
+            System.out.println("Transaction Processing");
+        else
+            System.out.println("Oops! something went wrong");
+        PreparedStatement preparedStatement1 = connection.prepareStatement(sql2);
+        preparedStatement1.setDouble(1,end);
+        preparedStatement1.setInt(2,acctNum);
+        int count2 = preparedStatement1.executeUpdate();
+        if (count2>0) {
+            System.out.println("You have withdrawn $" + withdraw + " from Account #" + acctNum + " Remaining Balance is $" + end);
+        } else {
+            System.out.println("Oops! something went wrong");
+        }
 
     }
 }
