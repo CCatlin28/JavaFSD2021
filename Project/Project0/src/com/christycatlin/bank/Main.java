@@ -1,6 +1,6 @@
 package com.christycatlin.bank;
 
-import com.christycatlin.accounts.AcctDBImpl;
+
 import com.christycatlin.customer.CustomerDBImpl;
 import com.christycatlin.employee.EmployeeDBImpl;
 
@@ -31,6 +31,7 @@ public class Main {
     }
 
     public static void menu() throws SQLException {
+        CustomerDBImpl customerDB = new CustomerDBImpl();
         Scanner scanner = new Scanner(System.in);
         try {
             switch (scanner.nextInt()) {
@@ -49,26 +50,10 @@ public class Main {
                     int custID = scanner.nextInt();
                     System.out.println("Enter Password");
                     String custPass = scanner.next();
-                    CustomerDBImpl customerDB = new CustomerDBImpl();
                     customerDB.custLogin(custID, custPass);
                     break;
                 case 3:
-                    System.out.println("Enter First Name");
-                    String fName = scanner.next();
-                    System.out.println("Enter Last Name");
-                    String lName = scanner.next();
-                    System.out.println("Enter Phone Number");
-                    String cPhone = scanner.next();
-                    System.out.println("Enter Email");
-                    String cEmail = scanner.next();
-                    System.out.println("Enter Desired Password");
-                    String cPass = scanner.next();
-                    System.out.println("What Type of Account: Checking or Savings");
-                    String type = scanner.next();
-                    System.out.println("Enter Starting Deposit Amount:");
-                    double deposit = scanner.nextDouble();
-                    //    sysAccess.addCustomer(fName,lName,cPhone,cEmail,cPass);
-                    //New Customer Application
+                    customerDB.newAcct();
 
                     break;
                 case 4:

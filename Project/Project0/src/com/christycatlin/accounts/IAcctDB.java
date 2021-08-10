@@ -1,7 +1,7 @@
 package com.christycatlin.accounts;
 
 import java.sql.SQLException;
-import java.util.List;
+
 
 public interface IAcctDB {
     void getAcct() throws SQLException;

@@ -4,6 +4,7 @@ import com.christycatlin.accounts.AcctDBImpl;
 import com.christycatlin.bank.Main;
 import com.christycatlin.connections.ConnectionFactory;
 import com.christycatlin.customer.CustomerDBImpl;
+import com.christycatlin.transactions.TransactionsDBImpl;
 
 
 import java.sql.*;
@@ -33,8 +34,10 @@ public class EmployeeDBImpl implements IEmployeeDB{
         System.out.println("Phone: " +phone +", Email: "+ email);
         System.out.println("New Account Information:");
         System.out.println("Requested Account Type: " + type + ", Proposed Stating Balance: $"+deposit);
+        CustomerDBImpl customer = new CustomerDBImpl();
         AcctDBImpl acctDB = new AcctDBImpl();
-        acctDB.getAcct();
+        TransactionsDBImpl transactionsDB = new TransactionsDBImpl();
+        customer.getCust();
         System.out.println("Is Account Approved or Denied: Input 'A' for Approved or 'D' for Denied");
         Scanner scanner = new Scanner(System.in);
         try {
@@ -45,36 +48,48 @@ public class EmployeeDBImpl implements IEmployeeDB{
                         case "Y":
                             System.out.println("What is new Customers password?");
                             String pass = scanner.next();
-                            CustomerDBImpl customerDB = new CustomerDBImpl();
-                            customerDB.newCust(name, surName, phone, email,pass);
+                            //adding customer
+                            customer.newCust(name, surName, phone, email,pass);
                             String sql = "select MAX(Cust_ID) from customer";
                             Statement statement = connection.createStatement();
                             ResultSet resultSet = statement.executeQuery(sql);
                             if (resultSet.next()) {
                                 int id = resultSet.getInt(1);
                                 viewCustomer(id);
+                                //adding account
                                 acctDB.createAcct(id,type,deposit);
                                 String sql2 = "select MAX(Acct_Num) from accounts";
                                 Statement statement2 = connection.createStatement();
                                 ResultSet resultSet2 = statement2.executeQuery(sql2);
                                 if (resultSet2.next()) {
                                     int acctNum = resultSet2.getInt(1);
-                                    String sql5 = "insert into transactions (Cust_ID, Acct_Id, deposit, End_bal) values (?, ?, ?, ?)";
-                                    PreparedStatement preparedStatement5 = connection.prepareStatement(sql5);
-                                    preparedStatement5.setInt(1, id);
-                                    preparedStatement5.setInt(2, acctNum);
-                                    preparedStatement5.setDouble(3, deposit);
-                                    preparedStatement5.setDouble(4, deposit);
-                                    int count5 = preparedStatement5.executeUpdate();
-                                    System.out.println("New Customer Set Up Complete");
+                                    transactionsDB.logDeposit(id,acctNum,0,deposit, deposit);
+                                    break;
                                 }
                             }
-                        case "N":
-                        default:
+                        case "N": {
+                            System.out.println("What is the Existing Customers ID?");
+                            int id = scanner.nextInt();
+                            acctDB.createAcct(id, type, deposit);
+                            String sql2 = "select MAX(Acct_Num) from accounts";
+                            Statement statement2 = connection.createStatement();
+                            ResultSet resultSet2 = statement2.executeQuery(sql2);
+                            if (resultSet2.next()) {
+                                int acctNum = resultSet2.getInt(1);
+                                transactionsDB.logDeposit(id, acctNum, 0, deposit, deposit);
+                                break;
+                            }
+                        }
+                        default:{
+                            System.out.println("Something went wrong Please start over");
+                            break;
+                        }
+
                     }
-                        case "D":
-                              System.out.println("We are sorry your Account is not approved");
-                             mainMenu.welcomeScreen();
+                        case "D": {
+                            System.out.println("We are sorry your Account is not approved");
+                            mainMenu.welcomeScreen();
+                        }
                           default:
                              System.out.println("Something went wrong, please Try Again Later");
                              mainMenu.welcomeScreen();
@@ -83,8 +98,6 @@ public class EmployeeDBImpl implements IEmployeeDB{
             System.out.println("Something went wrong, please Try Again Later");
             mainMenu.welcomeScreen();
         }
-
-
 
     }
 

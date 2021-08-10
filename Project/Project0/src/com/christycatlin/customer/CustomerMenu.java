@@ -75,8 +75,7 @@ public class CustomerMenu {
 
 
         } catch (InputMismatchException exception) {
-            System.out.println("Please input a Number between 1 and 6" +
-                    "");
+            System.out.println("Please input a Number between 1 and 6");
             CustMainMenu(id);
         }
     }

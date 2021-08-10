@@ -4,7 +4,6 @@ import com.christycatlin.accounts.AcctDBImpl;
 import com.christycatlin.bank.Main;
 import com.christycatlin.connections.ConnectionFactory;
 import com.christycatlin.employee.EmployeeDBImpl;
-
 import java.sql.*;
 import java.util.Scanner;
 
@@ -47,7 +46,7 @@ public class CustomerDBImpl implements ICustomerDB {
 
     }
 
-    @Override
+    @Override //working
     public void newAcct() throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please Answer the Following Questions to Apply for a New Account");
@@ -72,9 +71,8 @@ public class CustomerDBImpl implements ICustomerDB {
 
     }
 
-    @Override
+    @Override // working
     public void startTransfer(int custID) throws SQLException {
-        CustomerMenu menu = new CustomerMenu(custID);
         AcctDBImpl acctDB = new AcctDBImpl();
         Scanner scanner = new Scanner(System.in);
         System.out.println("What Account Number would you like to make the transfer FROM");
@@ -90,7 +88,6 @@ public class CustomerDBImpl implements ICustomerDB {
                 double transfer = scanner.nextDouble();
                 if (transfer > balance) {
                     System.out.println("Insufficient Funds");
-                    menu.CustMainMenu(custID);
                 } else {
                     double newBalance = balance - transfer;
                     connection.setAutoCommit(false);
@@ -110,7 +107,6 @@ public class CustomerDBImpl implements ICustomerDB {
                                     + acctId + "Which has a New Balance of $" + newBalance + " into Account #"
                                     + acctID2 + " Which has a New Balance of $" + newBalance2);
                             connection.commit();
-                            menu.CustMainMenu(custID);
                         } else {
                             System.out.println("Requires Receiving customer Approval");
                             acceptTransfer(custID, acctId, custId2, acctID2, transfer);
@@ -118,22 +114,18 @@ public class CustomerDBImpl implements ICustomerDB {
                     } else {
                         System.out.println("No Account Found");
                         connection.rollback();
-                        menu.CustMainMenu(custID);
                     }
                 }
             } else {
                 System.out.println("This requires login of Customer " + custId1);
-                menu.CustMainMenu(custID);
             }
         } else {
             System.out.println("No Account Found");
-            menu.CustMainMenu(custID);
         }
     }
 
-        @Override
+        @Override //working
         public void acceptTransfer(int custID, int acctId, int custId2, int acctID2, double transfer) throws SQLException {
-            CustomerMenu menu = new CustomerMenu(custID);
             System.out.println("Customer " + custId2 + "Please input password");
             Scanner scanner = new Scanner(System.in);
             String pass = scanner.next();
@@ -149,11 +141,9 @@ public class CustomerDBImpl implements ICustomerDB {
                     System.out.println("You have transferred $" + transfer + " from Account #"
                             + acctId + " into Account #" + acctID2);
                     connection.commit();
-                    menu.CustMainMenu(custID);
                 } else {
                     System.out.println("Password is Incorrect");
                     connection.rollback();
-                    menu.CustMainMenu(custID);
 
                 }
 
@@ -177,6 +167,25 @@ public class CustomerDBImpl implements ICustomerDB {
             Main mainMenu = new Main();
             mainMenu.welcomeScreen();
         }
+    }
+
+    @Override //working
+    public void getCust() throws SQLException {
+        String sql = "select customer.cust_id, first_name, last_name, Acct_Num, Acct_type, Balance from customer left join accounts on customer.cust_id = accounts.cust_id;";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        while (resultSet.next()){
+            int custID = resultSet.getInt(1);
+            String name = resultSet.getString(2);
+            String surName = resultSet.getString(3);
+            int acctID = resultSet.getInt(4);
+            String acctType = resultSet.getString(5);
+            double bal = resultSet.getDouble(6);
+            System.out.println("Customer ID: " + custID + ", Customer Full Name: " + name + " " + surName
+                + ", Account Number: " + acctID + ", Account Type: " + acctType +", Current Balance: " +bal);
+        }
+        System.out.println("End of Account List");
+
     }
 }
 
