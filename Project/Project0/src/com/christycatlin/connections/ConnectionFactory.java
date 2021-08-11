@@ -10,7 +10,6 @@ public class ConnectionFactory {
     private static Connection connection = null;
 
     private ConnectionFactory(){
-
     }
 
     public static Connection getConnection () throws SQLException {
@@ -20,7 +19,6 @@ public class ConnectionFactory {
             String username = bundle.getString("username");
             String password = bundle.getString("password");
             connection = DriverManager.getConnection(url, username, password);
-
         }
         return connection;
     }

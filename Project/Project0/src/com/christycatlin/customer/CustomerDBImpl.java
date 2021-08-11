@@ -19,10 +19,9 @@ public class CustomerDBImpl implements ICustomerDB {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
-    @Override //this one is working
+    @Override
     public void custLogin(int id, String pass) throws SQLException {
         String sql = "select Cust_ID, password from customer where Cust_ID = " + id;
         Statement statement = connection.createStatement();
@@ -43,10 +42,9 @@ public class CustomerDBImpl implements ICustomerDB {
             System.out.println("No Record Found");
             mainMenu.welcomeScreen();
         }
-
     }
 
-    @Override //working
+    @Override
     public void newAcct() throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please Answer the Following Questions to Apply for a New Account");
@@ -60,18 +58,23 @@ public class CustomerDBImpl implements ICustomerDB {
         String email = scanner.next();
         System.out.println("Please Select Type of Account: Checking or Savings");
         String type = scanner.next();
-        System.out.println("Please Type in Your Starting Deposit");
-        double deposit = scanner.nextDouble();
-        System.out.println("Approving Employee please input your ID");
-        int id = scanner.nextInt();
-        System.out.println("Please Input Password");
-        String pass = scanner.next();
-        EmployeeDBImpl employeeDB = new EmployeeDBImpl();
-        employeeDB.empAccountApproval(id, pass, name, surName, phone, email, type, deposit);
-
+        if (type.equalsIgnoreCase("Checking") || type.equalsIgnoreCase("Savings")) {
+            System.out.println("Please Type in Your Starting Deposit");
+            double deposit = scanner.nextDouble();
+            System.out.println("Approving Employee please input your ID");
+            int id = scanner.nextInt();
+            System.out.println("Please Input Password");
+            String pass = scanner.next();
+            EmployeeDBImpl employeeDB = new EmployeeDBImpl();
+            employeeDB.empAccountApproval(id, pass, name, surName, phone, email, type, deposit);
+        } else {
+            System.out.println("Incorect input, please start over");
+            Main main = new Main();
+            main.welcomeScreen();
+        }
     }
 
-    @Override // working
+    @Override
     public void startTransfer(int custID) throws SQLException {
         AcctDBImpl acctDB = new AcctDBImpl();
         Scanner scanner = new Scanner(System.in);
@@ -104,7 +107,7 @@ public class CustomerDBImpl implements ICustomerDB {
                         if (custID == custId2) {
                             acctDB.deposit(custID,acctID2,transfer);
                             System.out.println("You have transferred $" + transfer + " from Account #"
-                                    + acctId + "Which has a New Balance of $" + newBalance + " into Account #"
+                                    + acctId + " Which has a New Balance of $" + newBalance + " into Account #"
                                     + acctID2 + " Which has a New Balance of $" + newBalance2);
                             connection.commit();
                         } else {
@@ -124,9 +127,9 @@ public class CustomerDBImpl implements ICustomerDB {
         }
     }
 
-        @Override //working
+        @Override
         public void acceptTransfer(int custID, int acctId, int custId2, int acctID2, double transfer) throws SQLException {
-            System.out.println("Customer " + custId2 + "Please input password");
+            System.out.println("Customer " + custId2 + " Please input password");
             Scanner scanner = new Scanner(System.in);
             String pass = scanner.next();
             String sql5 = "select password from customer where Cust_ID = " + custId2;
@@ -144,9 +147,7 @@ public class CustomerDBImpl implements ICustomerDB {
                 } else {
                     System.out.println("Password is Incorrect");
                     connection.rollback();
-
                 }
-
             }
         }
 
@@ -169,7 +170,7 @@ public class CustomerDBImpl implements ICustomerDB {
         }
     }
 
-    @Override //working
+    @Override
     public void getCust() throws SQLException {
         String sql = "select customer.cust_id, first_name, last_name, Acct_Num, Acct_type, Balance from customer left join accounts on customer.cust_id = accounts.cust_id;";
         Statement statement = connection.createStatement();
@@ -185,7 +186,6 @@ public class CustomerDBImpl implements ICustomerDB {
                 + ", Account Number: " + acctID + ", Account Type: " + acctType +", Current Balance: " +bal);
         }
         System.out.println("End of Account List");
-
     }
 }
 

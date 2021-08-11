@@ -5,8 +5,6 @@ import com.christycatlin.bank.Main;
 import com.christycatlin.connections.ConnectionFactory;
 import com.christycatlin.customer.CustomerDBImpl;
 import com.christycatlin.transactions.TransactionsDBImpl;
-
-
 import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -22,7 +20,6 @@ public class EmployeeDBImpl implements IEmployeeDB{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
     @Override
@@ -42,28 +39,27 @@ public class EmployeeDBImpl implements IEmployeeDB{
         Scanner scanner = new Scanner(System.in);
         try {
             switch (scanner.next()) {
-                case "A":
+                case "A":{
                     System.out.println("Is Customer New? Input 'Y' for Yes and 'N' for No.");
                     switch (scanner.next()) {
                         case "Y":
                             System.out.println("What is new Customers password?");
                             String pass = scanner.next();
                             //adding customer
-                            customer.newCust(name, surName, phone, email,pass);
+                            customer.newCust(name, surName, phone, email, pass);
                             String sql = "select MAX(Cust_ID) from customer";
                             Statement statement = connection.createStatement();
                             ResultSet resultSet = statement.executeQuery(sql);
                             if (resultSet.next()) {
                                 int id = resultSet.getInt(1);
-                                viewCustomer(id);
                                 //adding account
-                                acctDB.createAcct(id,type,deposit);
+                                acctDB.createAcct(id, type, deposit);
                                 String sql2 = "select MAX(Acct_Num) from accounts";
                                 Statement statement2 = connection.createStatement();
                                 ResultSet resultSet2 = statement2.executeQuery(sql2);
                                 if (resultSet2.next()) {
                                     int acctNum = resultSet2.getInt(1);
-                                    transactionsDB.logDeposit(id,acctNum,0,deposit, deposit);
+                                    transactionsDB.logDeposit(id, acctNum, 0, deposit, deposit);
                                     break;
                                 }
                             }
@@ -80,28 +76,28 @@ public class EmployeeDBImpl implements IEmployeeDB{
                                 break;
                             }
                         }
-                        default:{
+                        default: {
                             System.out.println("Something went wrong Please start over");
                             break;
                         }
-
+                    }
+                    break;
                     }
                         case "D": {
                             System.out.println("We are sorry your Account is not approved");
-                            mainMenu.welcomeScreen();
+                            break;
                         }
                           default:
                              System.out.println("Something went wrong, please Try Again Later");
-                             mainMenu.welcomeScreen();
+                             break;
             }
         } catch (InputMismatchException exception){
             System.out.println("Something went wrong, please Try Again Later");
-            mainMenu.welcomeScreen();
         }
-
+        mainMenu.welcomeScreen();
     }
 
-    @Override // working
+    @Override
     public void empLogin(int id, String pass) throws SQLException {
         String sql = "select Emp_ID, password from employee where Emp_ID = " + id;
         Statement statement = connection.createStatement();
@@ -126,13 +122,12 @@ public class EmployeeDBImpl implements IEmployeeDB{
 
     @Override
     public void empAccountApproval(int id, String pass, String name, String surName, String phone, String email, String type, double deposit) throws SQLException {
-        String sql = "select Emp_ID, password from employee where Emp_ID = " + id;
+        String sql = "select password from employee where Emp_ID = " + id;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         Main mainMenu = new Main();
         if (resultSet.next()) {
-            int empId = resultSet.getInt(1);
-            String password = resultSet.getString(2);
+            String password = resultSet.getString(1);
             if (pass.equalsIgnoreCase(password)) {
                 System.out.println("Employee Login Successful");
                 confirmNewAccount(name,surName, phone, email, type, deposit);
@@ -144,10 +139,5 @@ public class EmployeeDBImpl implements IEmployeeDB{
             System.out.println("No Record Found");
             mainMenu.welcomeScreen();
         }
-    }
-
-    @Override
-    public void viewCustomer(int id) {
-
     }
 }

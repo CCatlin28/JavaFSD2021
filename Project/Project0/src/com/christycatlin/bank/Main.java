@@ -1,10 +1,7 @@
 package com.christycatlin.bank;
 
-
 import com.christycatlin.customer.CustomerDBImpl;
 import com.christycatlin.employee.EmployeeDBImpl;
-
-
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -13,7 +10,6 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         welcomeScreen();
-
     }
 
     public static void welcomeScreen() throws SQLException {
@@ -61,14 +57,13 @@ public class Main {
                     System.out.println("Goodbye, Have a Good Day!");
                     break;
                 default:
-                    System.out.println("Please Select 1-4");
+                    System.out.println("Please Select A Number from the Menu");
                     welcomeScreen();
                     break;
             }
         } catch (InputMismatchException exception){
-            System.out.println("Please Select 1-4");
+            System.out.println("Please Select a Number from the Menu");
             welcomeScreen();
-
         }
     }
 }

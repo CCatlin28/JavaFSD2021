@@ -2,7 +2,6 @@ package com.christycatlin.accounts;
 
 import java.sql.SQLException;
 
-
 public interface IAcctDB {
     void getAcct() throws SQLException;
     void getAcctByCustID(int custId) throws SQLException;
@@ -10,6 +9,4 @@ public interface IAcctDB {
     void withdraw(int id, int acctId, double withdrawAmt) throws SQLException;
     void deposit(int id, int acctId, double depositAmt) throws SQLException;
     void createAcct(int custID, String type, double balance) throws SQLException;
-
-
 }

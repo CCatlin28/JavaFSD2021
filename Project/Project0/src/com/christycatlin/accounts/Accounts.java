@@ -5,21 +5,11 @@ public class Accounts {
     private int custID;
     private String acctType;
     private double balance;
-    String CHECKING = "Checking";
-    String SAVINGS = "Savings";
 
     public Accounts(){
 
     }
 
-    public Accounts (int custID){
-        this.custID=custID;
-    }
-    public Accounts(int acctId, String acctType){
-        this.acctId = acctId;
-        this.acctType = acctType;
-
-    }
     public Accounts(int acctId, int custID, String acctType, double balance){
         this.acctId = acctId;
         this.custID = custID;
@@ -41,29 +31,6 @@ public class Accounts {
 
     public void setCustID(int custID) {
         this.custID = custID;
-    }
-
-    public String getAcctType() {
-        return acctType;
-    }
-
-    public void setAcctType(String acctType) {
-        this.acctType = acctType;
-        if (acctType.equalsIgnoreCase("Checking")) {
-            acctType = CHECKING;
-        } else if (acctType.equalsIgnoreCase("Savings")){
-            acctType = SAVINGS;
-        }
-        else
-            System.out.println("This input is invalid");
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
     }
 
     @Override

@@ -41,6 +41,9 @@ public class EmployeeMenu {
                             acctDB.getAcctByCustID(custID);
                             EmpMainMenu(id);
                             break;
+                        default:
+                            System.out.println("Selection Not Available");
+                            EmpMainMenu(id);
                     }
                     break;
                 case 2:
@@ -66,11 +69,11 @@ public class EmployeeMenu {
                             transactionsDB.viewAcct(acctID);
                             EmpMainMenu(id);
                             break;
-
+                        default:
+                            System.out.println("Selection Not Available");
+                            EmpMainMenu(id);
                     }
-
                     break;
-
                 case 3:
                     System.out.println("Goodbye, Have a Good Day!");
                     Main main = new Main();
@@ -80,15 +83,13 @@ public class EmployeeMenu {
                     System.out.println("Goodbye, Have a Good Day!");
                     break;
                 default:
-                    System.out.println("Please input a Number between 1 and 6");
+                    System.out.println("Please input a Number from the Menu");
                     EmpMainMenu(id);
                     break;
             }
-
         } catch (InputMismatchException exception) {
-            System.out.println("Please input a Number between 1 and 6");
+            System.out.println("Please input a Number from the Menu");
             EmpMainMenu(id);
         }
     }
-
 }

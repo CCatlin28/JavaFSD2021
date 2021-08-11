@@ -1,14 +1,11 @@
 package com.christycatlin.transactions;
 
 import com.christycatlin.connections.ConnectionFactory;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class TransactionsDBImpl implements ITransactionDB{
-
 
         private static Statement statement = null;
         Connection connection = null;
@@ -19,8 +16,9 @@ public class TransactionsDBImpl implements ITransactionDB{
             } catch (SQLException throwables){
                 throwables.printStackTrace();
             }
-    }
-    @Override // working
+        }
+
+    @Override
     public void viewAll() throws SQLException {
         List<Transactions> transactions = new ArrayList<>();
         String sql = "select * from transactions";
@@ -37,13 +35,11 @@ public class TransactionsDBImpl implements ITransactionDB{
             Transactions transactions1 = new Transactions(id, custId, acctId,startBal, withdrawl, deposit, endBal);
             transactions.add(transactions1);
             System.out.println(transactions1);
-
         }
         System.out.println("End of Transaction List");
-
     }
 
-    @Override //working
+    @Override
     public List<Transactions> viewCust(int custID) throws SQLException {
         List<Transactions> transactions = new ArrayList<>();
         String sql = "select * from transactions where Cust_ID = " +custID;
@@ -60,14 +56,12 @@ public class TransactionsDBImpl implements ITransactionDB{
             Transactions transactions1 = new Transactions(id, custId, acctId,startBal, withdrawl, deposit, endBal);
             transactions.add(transactions1);
             System.out.println(transactions1);
-
         }
         System.out.println("End of Transaction List");
         return transactions;
+        }
 
-    }
-
-    @Override //working
+    @Override
     public List<Transactions> viewAcct(int acctNum) throws SQLException {
         List<Transactions> transactions = new ArrayList<>();
         String sql = "select * from transactions where Acct_ID = " +acctNum;
@@ -84,14 +78,12 @@ public class TransactionsDBImpl implements ITransactionDB{
             Transactions transactions1 = new Transactions(id, custId, acctId,startBal, withdrawl, deposit, endBal);
             transactions.add(transactions1);
             System.out.println(transactions1);
-
         }
         System.out.println("End of Transaction List");
         return transactions;
-
     }
 
-    @Override // working
+    @Override
     public void logDeposit(int custID, int acctNum, double start, double deposit, double end) throws SQLException {
         Statement statement = connection.createStatement();
         String sql = "insert into transactions (Cust_ID, Acct_ID, start_bal, deposit, end_bal) values (?, ?, ?, ?, ?)";
@@ -117,7 +109,7 @@ public class TransactionsDBImpl implements ITransactionDB{
             System.out.println("Oops Somethins Went Wrong");
     }
 
-    @Override // working correctly
+    @Override
     public void logWithdraw(int custID, int acctNum, double start, double withdraw, double end) throws SQLException {
         Statement statement = connection.createStatement();
         String sql = "insert into transactions (Cust_ID, Acct_ID, start_bal, withdraw, end_bal) values (?, ?, ?, ?, ?)";
@@ -142,6 +134,5 @@ public class TransactionsDBImpl implements ITransactionDB{
         } else {
             System.out.println("Oops! something went wrong");
         }
-
     }
 }

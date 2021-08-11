@@ -2,7 +2,6 @@ package com.christycatlin.customer;
 
 import com.christycatlin.accounts.AcctDBImpl;
 import com.christycatlin.bank.Main;
-
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -32,12 +31,15 @@ public class CustomerMenu {
                 case 1:
                     System.out.println("1. View All Accounts");
                     System.out.println("2. View by Account Number.");
-                    if (scanner.nextInt()==1) {
+                    int menu = scanner.nextInt();
+                    if (menu==1) {
                         acctDB.getAcctByCustID(id);
-                    } else {
+                    } else if(menu == 2){
                         System.out.println("Input Account Number To View");
                         int acctID = scanner.nextInt();
                         acctDB.getAcctByAcctID(id, acctID);
+                    } else {
+                        System.out.println("Please input a valid menu option");
                     }
                     CustMainMenu(id);
                     break;
@@ -59,6 +61,8 @@ public class CustomerMenu {
                     break;
                 case 4:
                     customerDB.startTransfer(id);
+                    CustMainMenu(id);
+                    break;
                 case 5:
                     System.out.println("Goodbye, Have a Good Day!");
                     Main main = new Main();
@@ -68,15 +72,13 @@ public class CustomerMenu {
                     System.out.println("Goodbye, Have a Good Day!");
                     break;
                 default:
-                    System.out.println("Please input a Number between 1 and 6");
+                    System.out.println("Please input a Number from the Menu");
                     CustMainMenu(id);
                     break;
             }
-
-
         } catch (InputMismatchException exception) {
-            System.out.println("Please input a Number between 1 and 6");
-            CustMainMenu(id);
+            System.out.println("Please input a Number from the Menu");
+           CustMainMenu(id);
         }
     }
 }

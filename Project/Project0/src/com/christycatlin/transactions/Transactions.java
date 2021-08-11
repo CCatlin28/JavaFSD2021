@@ -10,7 +10,6 @@ public class Transactions {
     private double endBal;
 
     public Transactions() {
-
     }
 
     public Transactions(int transactionId, int custId, int acctId, double startBal, double withdrawl, double deposit, double endBal) {
@@ -21,24 +20,6 @@ public class Transactions {
         this.withdrawl = withdrawl;
         this.deposit = deposit;
         this. endBal =endBal;
-
-    }
-
-    public Transactions(int transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public Transactions(int custId, int acctId) {
-        this.custId = custId;
-        this.acctId = acctId;
-    }
-
-    public int getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(int transactionId) {
-        this.transactionId = transactionId;
     }
 
     public int getCustId() {
@@ -57,37 +38,6 @@ public class Transactions {
         this.acctId = acctId;
     }
 
-    public double getStartBal() {
-        return startBal;
-    }
-
-    public void setStartBal(double startBal) {
-        this.startBal = startBal;
-    }
-
-    public double getWithdrawl() {
-        return withdrawl;
-    }
-
-    public void setWithdrawl(double withdrawl) {
-        this.withdrawl = withdrawl;
-    }
-
-    public double getDeposit() {
-        return deposit;
-    }
-
-    public void setDeposit(double deposit) {
-        this.deposit = deposit;
-    }
-
-    public double getEndBal() {
-        return endBal;
-    }
-
-    public void setEndBal(double endBal) {
-        this.endBal = endBal;
-    }
 
     @Override
     public String toString() {

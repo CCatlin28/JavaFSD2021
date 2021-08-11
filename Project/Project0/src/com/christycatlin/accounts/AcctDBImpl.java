@@ -4,7 +4,6 @@ import com.christycatlin.bank.Main;
 import com.christycatlin.connections.ConnectionFactory;
 import com.christycatlin.customer.CustomerMenu;
 import com.christycatlin.transactions.TransactionsDBImpl;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ public class AcctDBImpl implements IAcctDB{
         }
     }
 
-    @Override // works correctly
+    @Override
     public void getAcct() throws SQLException {
         List<Accounts> accounts = new ArrayList<>();
         String sql = "select * from accounts";
@@ -35,14 +34,11 @@ public class AcctDBImpl implements IAcctDB{
             Accounts accounts1 = new Accounts(acctID,custID,acctType,bal);
             accounts.add(accounts1);
             System.out.println(accounts1);
-
         }
         System.out.println("End of Account List");
-
-
     }
 
-    @Override // works correctly
+    @Override
     public void getAcctByCustID(int custId) throws SQLException {
         List<Accounts> accounts = new ArrayList<>();
         String sql = "select * from accounts where Cust_ID =" + custId;
@@ -60,9 +56,7 @@ public class AcctDBImpl implements IAcctDB{
         System.out.println("End of Account List");
     }
 
-
-
-    @Override //works correctly
+    @Override
     public void getAcctByAcctID(int custID, int acctId) throws SQLException {
         List<Accounts> accounts = new ArrayList<>();
         String sql = "select * from accounts where Acct_Num =" + acctId;
@@ -82,14 +76,12 @@ public class AcctDBImpl implements IAcctDB{
                 CustomerMenu menu = new CustomerMenu(custID);
                 menu.CustMainMenu(custID);
             }
-
         } else {
             System.out.println("No Account Found");
         }
-
     }
 
-    @Override // working correctly
+    @Override
     public void withdraw(int id, int acctId, double withdrawAmt) throws SQLException {
         String sql = "select Cust_ID, Balance from accounts where Acct_Num =" + acctId;
         Statement statement = connection.createStatement();
@@ -101,8 +93,7 @@ public class AcctDBImpl implements IAcctDB{
                 System.out.println("You do not have access to this account");
                 CustomerMenu menu = new CustomerMenu(id);
                 menu.CustMainMenu(id);
-            }
-            if (withdrawAmt>balance){
+            } else if (withdrawAmt>balance){
                 System.out.println("Insufficient Funds");
             } else {
                 double newBalance = balance-withdrawAmt;
@@ -114,10 +105,9 @@ public class AcctDBImpl implements IAcctDB{
             CustomerMenu menu = new CustomerMenu(id);
             menu.CustMainMenu(id);
         }
-
     }
 
-    @Override // working
+    @Override
     public void deposit(int id, int acctId, double depositAmt) throws SQLException{
         String sql = "select Cust_ID, Balance from accounts where Acct_Num =" + acctId;
         Statement statement = connection.createStatement();
@@ -134,13 +124,11 @@ public class AcctDBImpl implements IAcctDB{
                 TransactionsDBImpl transactionsDB = new TransactionsDBImpl();
                 transactionsDB.logDeposit(custId,acctId, balance, depositAmt, newBalance);
             }
-
         } else {
             System.out.println("Unavailable Option Please Try Again");
             CustomerMenu menu = new CustomerMenu(id);
             menu.CustMainMenu(id);
         }
-
     }
 
     @Override
@@ -157,6 +145,6 @@ public class AcctDBImpl implements IAcctDB{
             System.out.println("Oops! Something went wrong");
             Main mainMenu = new Main();
             mainMenu.welcomeScreen();
-                                }
+        }
     }
 }
