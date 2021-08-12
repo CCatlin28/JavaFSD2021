@@ -23,7 +23,7 @@ public class Main {
         logger.debug("Hello this is a debug message");
         logger.info("Hello this is a info message");
         int c = a+b;
-      System.out.println(c);
+//      System.out.println(c);
         return c;
     }
 

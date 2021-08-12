@@ -4,6 +4,8 @@ import com.christycatlin.accounts.AcctDBImpl;
 import com.christycatlin.bank.Main;
 import com.christycatlin.connections.ConnectionFactory;
 import com.christycatlin.employee.EmployeeDBImpl;
+
+import java.io.IOException;
 import java.sql.*;
 import java.util.Scanner;
 
@@ -22,16 +24,18 @@ public class CustomerDBImpl implements ICustomerDB {
     }
 
     @Override
-    public void custLogin(int id, String pass) throws SQLException {
+    public boolean custLogin(int id, String pass) throws SQLException, IOException {
         String sql = "select Cust_ID, password from customer where Cust_ID = " + id;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         Main mainMenu = new Main();
+        boolean test = false;
         if (resultSet.next()) {
             int custId = resultSet.getInt(1);
             String password = resultSet.getString(2);
             if (pass.equalsIgnoreCase(password)) {
                 System.out.println("Customer Login Successful");
+                test = true;
                 CustomerMenu customerMenu = new CustomerMenu(custId);
                 customerMenu.CustMainMenu(custId);
             } else {
@@ -42,10 +46,11 @@ public class CustomerDBImpl implements ICustomerDB {
             System.out.println("No Record Found");
             mainMenu.welcomeScreen();
         }
+        return test;
     }
 
     @Override
-    public void newAcct() throws SQLException {
+    public void newAcct() throws SQLException, IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please Answer the Following Questions to Apply for a New Account");
         System.out.println("Please Type Your First Name");
@@ -152,7 +157,7 @@ public class CustomerDBImpl implements ICustomerDB {
         }
 
     @Override
-    public void newCust(String name, String surName, String phone, String email, String password) throws SQLException {
+    public void newCust(String name, String surName, String phone, String email, String password) throws SQLException, IOException {
         String sql = "insert into customer (First_name, Last_name, phone, email, password) values (?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, name);

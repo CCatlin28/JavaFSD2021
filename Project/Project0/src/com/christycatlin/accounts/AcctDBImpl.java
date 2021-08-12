@@ -2,8 +2,11 @@ package com.christycatlin.accounts;
 
 import com.christycatlin.bank.Main;
 import com.christycatlin.connections.ConnectionFactory;
+import com.christycatlin.connections.Logging;
 import com.christycatlin.customer.CustomerMenu;
 import com.christycatlin.transactions.TransactionsDBImpl;
+
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,8 @@ public class AcctDBImpl implements IAcctDB{
     @Override
     public void getAcct() throws SQLException {
         List<Accounts> accounts = new ArrayList<>();
-        String sql = "select * from accounts";
+  //      String sql = "select * from accounts";
+        String sql = "CALL `project`.`GetAccount`()";
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         while (resultSet.next()){
@@ -132,7 +136,7 @@ public class AcctDBImpl implements IAcctDB{
     }
 
     @Override
-    public void createAcct(int custID, String type, double balance) throws SQLException {
+    public void createAcct(int custID, String type, double balance) throws SQLException, IOException {
         String sql = "insert into accounts (Cust_id, Acct_type, balance) values (?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1, custID);

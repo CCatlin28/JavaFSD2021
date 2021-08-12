@@ -5,6 +5,8 @@ import com.christycatlin.bank.Main;
 import com.christycatlin.connections.ConnectionFactory;
 import com.christycatlin.customer.CustomerDBImpl;
 import com.christycatlin.transactions.TransactionsDBImpl;
+
+import java.io.IOException;
 import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -23,7 +25,7 @@ public class EmployeeDBImpl implements IEmployeeDB{
     }
 
     @Override
-    public void confirmNewAccount(String name, String surName, String phone, String email, String type, double deposit) throws SQLException {
+    public void confirmNewAccount(String name, String surName, String phone, String email, String type, double deposit) throws SQLException, IOException {
         Main mainMenu = new Main();
         System.out.println("****Customer Application for New Account****");
         System.out.println("Customer Name is " + name +" " +surName);
@@ -91,14 +93,14 @@ public class EmployeeDBImpl implements IEmployeeDB{
                              System.out.println("Something went wrong, please Try Again Later");
                              break;
             }
-        } catch (InputMismatchException exception){
+        } catch (InputMismatchException | IOException exception){
             System.out.println("Something went wrong, please Try Again Later");
         }
         mainMenu.welcomeScreen();
     }
 
     @Override
-    public void empLogin(int id, String pass) throws SQLException {
+    public void empLogin(int id, String pass) throws SQLException, IOException {
         String sql = "select Emp_ID, password from employee where Emp_ID = " + id;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
@@ -121,7 +123,7 @@ public class EmployeeDBImpl implements IEmployeeDB{
     }
 
     @Override
-    public void empAccountApproval(int id, String pass, String name, String surName, String phone, String email, String type, double deposit) throws SQLException {
+    public void empAccountApproval(int id, String pass, String name, String surName, String phone, String email, String type, double deposit) throws SQLException, IOException {
         String sql = "select password from employee where Emp_ID = " + id;
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);

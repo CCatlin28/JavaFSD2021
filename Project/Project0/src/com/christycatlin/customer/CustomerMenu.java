@@ -2,6 +2,9 @@ package com.christycatlin.customer;
 
 import com.christycatlin.accounts.AcctDBImpl;
 import com.christycatlin.bank.Main;
+
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -70,13 +73,15 @@ public class CustomerMenu {
                     break;
                 case 6:
                     System.out.println("Goodbye, Have a Good Day!");
+//                    Connection connection = null;
+//                    connection.close();
                     break;
                 default:
                     System.out.println("Please input a Number from the Menu");
                     CustMainMenu(id);
                     break;
             }
-        } catch (InputMismatchException exception) {
+        } catch (InputMismatchException | IOException exception) {
             System.out.println("Please input a Number from the Menu");
            CustMainMenu(id);
         }

@@ -9,8 +9,7 @@ public class Transactions {
     private double deposit;
     private double endBal;
 
-    public Transactions() {
-    }
+
 
     public Transactions(int transactionId, int custId, int acctId, double startBal, double withdrawl, double deposit, double endBal) {
         this.transactionId = transactionId;

@@ -1,18 +1,23 @@
 package com.christycatlin.bank;
 
+import com.christycatlin.connections.Logging;
 import com.christycatlin.customer.CustomerDBImpl;
 import com.christycatlin.employee.EmployeeDBImpl;
+
+
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, IOException {
         welcomeScreen();
     }
 
-    public static void welcomeScreen() throws SQLException {
+    public static void welcomeScreen() throws SQLException, IOException {
         System.out.println("********************");
         System.out.println("Welcome to the JAVA FULL STACK BANK");
         System.out.println("********************");
@@ -26,10 +31,11 @@ public class Main {
         menu();
     }
 
-    public static void menu() throws SQLException {
+    public static void menu() throws SQLException, IOException {
+
         CustomerDBImpl customerDB = new CustomerDBImpl();
         Scanner scanner = new Scanner(System.in);
-        try {
+                try {
             switch (scanner.nextInt()) {
                 case 1:
                     //Employee Log in
@@ -55,6 +61,10 @@ public class Main {
                 case 4:
                     //Exit System
                     System.out.println("Goodbye, Have a Good Day!");
+//                    Connection connection = null;
+//                    connection.close();
+                    Logging logging = new Logging();
+                    logging.log(1);
                     break;
                 default:
                     System.out.println("Please Select A Number from the Menu");
