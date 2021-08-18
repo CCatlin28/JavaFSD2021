@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Calculator</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap');
+        
+	.wrapper{
+		width: 40%;
+		border: 1px solid #666;
+		margin: 0 auto;
+		padding: 20px;
+		background-color: lightskyblue;
+	}
+    h1{
+        font-family: 'Playfair Display', serif, bold;
+            font-size: 50pt;
+            text-align: center;
+
+    }
+    table{
+        font-family: 'Times New Roman', Times, serif, bold;
+    }
+	</style>
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Calculator</h1>
+        <table>
+            <tr>
+                <td>Enter First Number</td>
+                <td><input type="number" name="first_number" placeholder="First Number"></td>
+            </tr>
+            <tr>
+                <td>Enter Second Number</td>
+                <td><input type="number" name="second_number" placeholder="First Number"></td>
+            </tr>
+            <tr>
+                <td>Select Function</td>
+                <td>
+                    <input type="radio" name="function" value="addition"/>addition
+                    <input type="radio" name="function" value="subtraction"/>subtraction
+                    <input type="radio" name="function" value="multiplication"/>multiplication
+                    <input type="radio" name="function" value="division"/>division
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Equals"/>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap');
+        
+        body{
+            background-color: rgb(15, 38, 170);
+            margin: auto;
+            font-family: 'Playfair Display', serif;
+        }
+    form{
+        background-color: violet;
+        width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        font-size: 16pt;
+        text-align: right;
+    }
+    input { margin-bottom: 10px; 
+        font-family: 'Playfair Display', serif;
+        font-size: 12pt;}
+        h1{
+            background-color: rgb(115, 7, 136);
+            width: 440px;
+            margin: 0 auto;
+            padding-bottom: 10px;
+            color: white;
+            text-align: center;
+        }
+ 
+          
+       
+        
+        </style>
+
+</head>
+<body>
+    <h1>Registration Form</h1>
+    
+     <form name="userForm" method="post" onsubmit="onSubmit(event)" action="">
+        <table>
+            <tbody>
+                <tr>
+            <td><label for="">User Name</label></td>
+            <td><input type="text" name="username" id="name"></td>
+        </tr>
+
+        <tr>
+           <td> <label for="">Email</label></td>
+           <td><input type="text" name="" id="email"></td> 
+        </tr>
+       <tr>
+           <td> <label for="">Password</label></td>
+           <td> <input type="password" name="" id="password"></td>
+        </tr>
+
+        <tr>
+           <td><label for="">Confirm password</label></td> 
+            <td><input type="password" name="" id="cpassword"></td>
+        </tr>
+    </tbody>
+        </table>
+
+        <div>
+            <input type="submit" value="Register">
+           
+        </div>
+     </form>
+    
+
+    <script>
+
+        function onSubmit(event){
+            event.preventDefault()
+
+            var name = document.userForm.username.value;
+            var email = document.userForm.email.value;
+            var password = document.userForm.password.value;
+            var cpassword = document.userForm.cpassword.value;
+
+            if(name==null || name==""){
+                alert('Name is Required')
+             
+            } else if (email==null || email==""){
+                alert('Email is Required')
+            }
+            else if(password===cpassword){
+                console.log('Registration succesful')
+            } else {
+                alert('Passwords do not match')
+            }
+        }
+    </script>
+    
+</body>
+</html>
