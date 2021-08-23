@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+  
+ <display-name>Employee Database with Hibernate</display-name>
+  <welcome-file-list>
+    <welcome-file>home.html</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>
+	<servlet-name>Add</servlet-name>
+	<servlet-class>com.christy.servlet.Add</servlet-class>
+</servlet>
+  <servlet>
+	<servlet-name>Delete</servlet-name>
+	<servlet-class>com.christy.servlet.Delete</servlet-class>
+</servlet>
+  <servlet>
+	<servlet-name>Update</servlet-name>
+	<servlet-class>com.christy.servlet.Update</servlet-class>
+</servlet>
+  <servlet>
+	<servlet-name>View</servlet-name>
+	<servlet-class>com.christy.servlet.View</servlet-class>
+</servlet>
+  <servlet>
+	<servlet-name>UpdateConfirm</servlet-name>
+	<servlet-class>com.christy.servlet.UpdateConfirm</servlet-class>
+</servlet>
+  <servlet>
+	<servlet-name>DeleteConfirm</servlet-name>
+	<servlet-class>com.christy.servlet.DeleteConfirm</servlet-class>
+</servlet>
+
+
+
+<servlet-mapping>
+	<servlet-name>Add</servlet-name>
+	<url-pattern>/Add</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>Delete</servlet-name>
+	<url-pattern>/Delete</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>Update</servlet-name>
+	<url-pattern>/Update</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>View</servlet-name>
+	<url-pattern>/View</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>UpdateConfirm</servlet-name>
+	<url-pattern>/UpdateConfirm</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>DeleteConfirm</servlet-name>
+	<url-pattern>/DeleteConfirm</url-pattern>
+</servlet-mapping>
+</web-app>

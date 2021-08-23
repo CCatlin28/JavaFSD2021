@@ -9,11 +9,28 @@
 
  <servlet>
 	<servlet-name>Login</servlet-name>
-	<servlet-class>com.revature.Login</servlet-class>
+	<servlet-class>com.christy.Login</servlet-class>
 </servlet>
+ <servlet>
+	<servlet-name>Profile</servlet-name>
+	<servlet-class>com.christy.Profile</servlet-class>
+</servlet>
+ <servlet>
+	<servlet-name>Logout</servlet-name>
+	<servlet-class>com.christy.Logout</servlet-class>
+</servlet>
+
 
 <servlet-mapping>
 	<servlet-name>Login</servlet-name>
-	<url-pattern>/login</url-pattern>
+	<url-pattern>/Login</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>Profile</servlet-name>
+	<url-pattern>/Profile</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>Logout</servlet-name>
+	<url-pattern>/Logout</url-pattern>
 </servlet-mapping>
 </web-app>

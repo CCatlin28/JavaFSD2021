@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>Link3</display-name>
+  <welcome-file-list>
+    <welcome-file>Index.html</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>
+	<servlet-name>Add</servlet-name>
+	<servlet-class>com.christy.servlets.Add</servlet-class>
+</servlet>
+  <servlet>
+	<servlet-name>Delete</servlet-name>
+	<servlet-class>com.christy.servlets.Delete</servlet-class>
+</servlet>
+  <servlet>
+	<servlet-name>Update</servlet-name>
+	<servlet-class>com.christy.servlets.Update</servlet-class>
+</servlet>
+  <servlet>
+	<servlet-name>View</servlet-name>
+	<servlet-class>com.christy.servlets.View</servlet-class>
+</servlet>
+  <servlet>
+	<servlet-name>UpdateConfirm</servlet-name>
+	<servlet-class>com.christy.servlets.UpdateConfirm</servlet-class>
+</servlet>
+  <servlet>
+	<servlet-name>DeleteConfirm</servlet-name>
+	<servlet-class>com.christy.servlets.DeleteConfirm</servlet-class>
+</servlet>
+
+
+
+<servlet-mapping>
+	<servlet-name>Add</servlet-name>
+	<url-pattern>/Add</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>Delete</servlet-name>
+	<url-pattern>/Delete</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>Update</servlet-name>
+	<url-pattern>/Update</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>View</servlet-name>
+	<url-pattern>/View</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>UpdateConfirm</servlet-name>
+	<url-pattern>/UpdateConfirm</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>DeleteConfirm</servlet-name>
+	<url-pattern>/DeleteConfirm</url-pattern>
+</servlet-mapping>
+</web-app>
