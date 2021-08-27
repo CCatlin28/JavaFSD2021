@@ -33,10 +33,10 @@ public class Update extends HttpServlet {
 		String idEmp = request.getParameter("select");
 		int id = Integer.parseInt(idEmp);
 		Employee2 emp = session.get(Employee2.class, id);
-		String name = emp.getName();
-		String email = emp.getEmail();
-		String gender = emp.getGender();
-		String country = emp.getCountry();
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		String gender = request.getParameter("gender");
+		String country = request.getParameter("country");
 		
 		
 		//print out confirmation page
